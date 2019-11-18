@@ -1,5 +1,13 @@
 # 4050 Project
 
+## TO-DO
+   *Create views and implement search by currently running and coming soon
+   *Add search by title and category
+   *Display results of search (movie, title, rating, trailer(will do trailer at the end))
+   *More details button under movie leads to page with more detail (Title, Category, Cast, Directory, Producer,
+   Synopsis, Reviews, Trailer picture and video)
+   *Checkout view to schedule a movie
+
 ## Git Guide
 
 ### Cloning the repository
