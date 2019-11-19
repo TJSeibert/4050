@@ -135,10 +135,20 @@ python3 manage.py runserver
 This will start the server and you should be able to go to 127.0.0.1:8000 and see the website.
 To quit the server use CONTROL-C.
 
-##Quick Rundown
+## Quick Rundown
 
 The basics of Django are models, templates, and views. 
-Models are how we'll define our database, right now we're using SQLite because it's easy and works well with development. https://docs.djangoproject.com/en/2.2/ref/models/fields/ for a quick reference on defining models. 
+Models are how we'll define our database, right now we're using SQLite because it's easy and works well with development.
+
+Whenever you make a change to any models.py file, you have to migrate those changes for them to take effect. To do this, you use
+```
+python3 manage.py makemigrations
+```
+and then use
+```
+python3 manage.py migrate
+```
+https://docs.djangoproject.com/en/2.2/ref/models/fields/ for a quick reference on defining models. 
 
 Views are used to handle web requests and responses. I'll probably be doing most of this but it's definitely useful knowledge to know whats going on as a whole. https://www.tutorialspoint.com/django/django_creating_views.htm has a quick rundown of views. 
 
