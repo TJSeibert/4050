@@ -100,8 +100,17 @@ also do ```git clean -f``` to permanently remove changes but be careful because 
 
 ## Django Startup
 
-You should be able to start up the website immediately by using
+I added the virtual environment to the repo. I'm not sure if that'll work but I figured we can give it a shot.
 
+To start up the virtual environment, cd into the directory that contains 4050_env, and you should be able to use
+
+```
+4050_env source/bin/activate
+```
+If it works, you'll see (4050_env) in your command line. If not, we'll figure something else out.
+
+
+Once you have the environment set up, cd into the Website directory and you should be able to start up the website immediately by using
 ```
 python3 manage.py runserver
 ```
