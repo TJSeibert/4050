@@ -2,7 +2,7 @@
 
 ## TO-DO
 * Create views and implement search by currently running and coming soon
-* Add search by title and category
+* Add search by title and category (11/18-11/19)
 * Display results of search
 	* Movie
 	* Title
@@ -17,7 +17,7 @@
 	* Synopsis
 	* Reviews
 	* Trailer picture and video
-* Checkout view to schedule a movie
+* Checkout view to schedule a movie (11/19)
 
 ## Git Guide
 
