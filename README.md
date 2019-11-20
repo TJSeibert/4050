@@ -122,7 +122,11 @@ Once you have the environment created, activate it by using
 ```
 source myvenv/bin/activate
 ```
-Then, inside the project directory, where requirements.txt is, use
+*NOTE To deactivate the virtual environment use:
+```
+deactivate
+```
+With the virtual environment activatd, inside the project directory, where requirements.txt is, use
 ```
 pip3 install -r requirements.txt
 ```
