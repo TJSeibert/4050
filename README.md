@@ -2,7 +2,7 @@
 
 ## TO-DO
 * Create views and implement search by currently running and coming soon
-* Add search by title and category
+* Add search by title and category (11/18-11/19)
 * Display results of search
 	* Movie
 	* Title
@@ -17,7 +17,7 @@
 	* Synopsis
 	* Reviews
 	* Trailer picture and video
-* Checkout view to schedule a movie
+* Checkout view to schedule a movie (11/19)
 
 ## Git Guide
 
@@ -111,18 +111,45 @@ also do ```git clean -f``` to permanently remove changes but be careful because 
 
 ## Django Startup
 
-I added the virtual environment to the repo. I'm not sure if that'll work but I figured we can give it a shot.
+Make sure you have Python 3.8.0 installed.
 
-To start up the virtual environment, cd into the directory that contains 4050_env, and you should be able to use
-
+The first thing you should do before coding is set up a python virtual environment. Make sure you do this outside of the project directory to avoid pushing it to the repository. In this case, I name my environment myvenv.
 ```
-4050_env source/bin/activate
+python3 -m venv myvenv
 ```
-If it works, you'll see (4050_env) in your command line. If not, we'll figure something else out.
 
+Once you have the environment created, activate it by using
+```
+source myvenv/bin/activate
+```
+Then, inside the project directory, where requirements.txt is, use
+```
+pip3 install -r requirements.txt
+```
+After this you'll have everything set up and you can start coding.
 
-Once you have the environment set up, cd into the Website directory and you should be able to start up the website immediately by using
+To make sure things are working, cd into Website where the manage.py file is, and use
 ```
 python3 manage.py runserver
 ```
-Then, you can simply go to http://127.0.0.1:8000/ to see what we have. 
+This will start the server and you should be able to go to 127.0.0.1:8000 and see the website.
+To quit the server use CONTROL-C.
+
+## Quick Rundown
+
+The basics of Django are models, templates, and views. 
+Models are how we'll define our database, right now we're using SQLite because it's easy and works well with development.
+
+Whenever you make a change to any models.py file, you have to migrate those changes for them to take effect. To do this, you use
+```
+python3 manage.py makemigrations
+```
+and then use
+```
+python3 manage.py migrate
+```
+https://docs.djangoproject.com/en/2.2/ref/models/fields/ for a quick reference on defining models. 
+
+Views are used to handle web requests and responses. I'll probably be doing most of this but it's definitely useful knowledge to know whats going on as a whole. https://www.tutorialspoint.com/django/django_creating_views.htm has a quick rundown of views. 
+
+Templates are where most of the presentation happens, django has its own template language that works nicely with html. https://docs.djangoproject.com/en/2.2/ref/templates/language/ has good information about this.
