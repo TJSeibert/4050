@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 
 class Movie(models.Model):
@@ -12,3 +13,13 @@ class Movie(models.Model):
     poster = models.ImageField(default='default.jpg', upload_to='movie_posters')
     currentlyPlaying = models.BooleanField(default=False)
     synopsis = models.TextField(default='synopsis')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.poster.path)
+
+        if img.height > 480 or img.width > 320:
+            output_size = (480, 320)
+            img.thumbnail(output_size)
+            img.save(self.poster.path)

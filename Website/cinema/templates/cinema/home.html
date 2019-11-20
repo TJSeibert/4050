@@ -1,6 +1,37 @@
 {% extends "cinema/base.html" %}
 {% block content %}
-<h3>
-	Welcome!
-</h3>
+
+{% if user.is_authenticated %}
+<div style="text-align:center; padding: 0 7em 2em 0;">
+	<h2>
+		Welcome!
+	</h2>
+	<h4>
+		Movies Currently Playing:
+	</h4>
+	{% for movie in allmovies %}
+		{% if movie.currentlyPlaying %}
+		<h5> {{ movie.title }} </h5>
+		<img class="poster" src="{{ movie.poster.url }}">
+		<h5> {{ movie.rating }} </h5>
+		{% endif %}
+	{% endfor %}
+	<h4>
+		Movies Coming Soon:
+	</h4>
+	{% for movie in allmovies %}
+		{% if movie.currentlyPlaying == False %}
+		<h5> {{ movie.title }} </h5>
+		<img class="poster" src="{{ movie.poster.url }}">
+		<h5> {{ movie.rating }} </h5>
+		{% endif %}
+	{% endfor %}
+
+</div>
+	
+
+{% else %}
+
+{% endif %}
+
 {% endblock content %}
