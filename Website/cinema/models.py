@@ -42,3 +42,6 @@ class seatInShowTime(models.Model):
    seatNumber = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
    show_id = models.ForeignKey(Show, on_delete=models.CASCADE)
    seatOccupied = models.BooleanField(default=False)
+
+class Promotion(models.Model):
+    promoID = models.IntegerField(primary_key=True)
