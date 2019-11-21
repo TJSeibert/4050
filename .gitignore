@@ -51,4 +51,3 @@ docs/_build/
 
 Website/media/profile_pics/*
 Website/db.sqlite3
-*/migrations/*
