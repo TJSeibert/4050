@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'cinema.apps.CinemaConfig',
     'users.apps.UsersConfig',
+    'checkout.apps.CheckoutConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

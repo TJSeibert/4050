@@ -1,0 +1,31 @@
+{% extends "cinema/base.html" %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'checkout/checkout.css' %}">
+
+    <div class="content-section">
+
+        <h1>Cart</h1>
+
+        {% if cart|length > 0 %}
+
+            {% for ticket in cart %}
+                <div class="ticket">
+                    <h2>{{ ticket.name }}</h2>
+                    <p><b>Type:</b> {{ ticket.type }}</p>
+                    <p><b>Seats:</b> {% for seat in ticket.seats %}{{ seat.0 }}{{ seat.1 }}, {% endfor %}</p>
+                </div>
+            {% endfor %}
+
+            <a href="{% url 'checkout-info' %}">Checkout</a>
+
+            {% else %}
+
+            <h3>Empty</h3>
+
+        {% endif %}
+
+    </div>
+
+{% endblock content %}
