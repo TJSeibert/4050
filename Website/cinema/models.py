@@ -1,5 +1,7 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from PIL import Image
+import datetime
 
 
 class Movie(models.Model):
@@ -23,3 +25,20 @@ class Movie(models.Model):
             output_size = (480, 320)
             img.thumbnail(output_size)
             img.save(self.poster.path)
+
+
+class Showroom(models.Model):
+    showroom_id = models.IntegerField(primary_key=True)
+    numSeats = models.IntegerField()
+
+class Show(models.Model):
+    show_id = models.IntegerField(primary_key=True)
+    showroom_id = models.ForeignKey(Showroom, on_delete=models.CASCADE)
+    movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    scheduledTime = models.TimeField()
+
+
+class seatInShowTime(models.Model):
+   seatNumber = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
+   show_id = models.ForeignKey(Show, on_delete=models.CASCADE)
+   seatOccupied = models.BooleanField(default=False)
