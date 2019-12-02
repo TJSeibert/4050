@@ -2,7 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from PIL import Image
 import datetime
-
+from django.db.models.signals import post_save, post_delete, pre_save
+from django.dispatch import receiver
 
 class Movie(models.Model):
     movie_id = models.IntegerField(primary_key=True)
@@ -45,3 +46,27 @@ class seatInShowTime(models.Model):
 
 class Promotion(models.Model):
     promoID = models.IntegerField(primary_key=True)
+
+class Ticket(models.Model):
+    ticketID = models.IntegerField(primary_key=True)
+    age = (
+        ('Child', 'Child'),
+        ('Adult', 'Adult'),
+        ('Senior', 'Senior'),
+        )
+    ageType = models.CharField(max_length = 100, choices = age)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def setPrice(sender, **kwargs):
+        if age == 'Child':
+            price = 8.00
+        elif age == 'Adult':
+            price = 10.00
+        else:
+            price = 12.00
+
+    
+
+
+
+
