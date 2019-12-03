@@ -32,7 +32,6 @@ class Showroom(models.Model):
     showroom_id = models.IntegerField(primary_key=True)
     numSeats = models.IntegerField()
 
-
 class Show(models.Model):
     show_id = models.IntegerField(primary_key=True)
     showroom_id = models.ForeignKey(Showroom, on_delete=models.CASCADE)
@@ -49,7 +48,6 @@ class seatInShowTime(models.Model):
     seatNumber = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     show_id = models.ForeignKey(Show, on_delete=models.CASCADE)
     seatOccupied = models.BooleanField(default=False)
-
 
 class Promotion(models.Model):
     promoID = models.IntegerField(primary_key=True)
