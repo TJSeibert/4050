@@ -1,0 +1,11 @@
+{% extends "cinema/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form action="/checkout/finalize/" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+        <p><b>Price:</b> {{ total_price }}</p>
+    </div>
+{% endblock content%}

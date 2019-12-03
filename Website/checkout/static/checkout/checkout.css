@@ -1,0 +1,79 @@
+/*:root {
+    --shadow_color:#0C1935;
+    --bg_color:#202c3f;
+    --ticket_color: #253244;
+    --ticket_hl:#2F3C4E;
+    --border_color:#576476;
+    --text_color:#7D8C9E;
+    --text_hl:#8796A8;
+    --emph_color:#4CB39C;
+    --hl:#4CB39C;
+    --debug:#ff0000;
+}*/
+
+/* Content */
+
+.cart {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 3em;
+    /*border: 1px solid #eedddd;*/
+}
+
+/* ticket */
+
+.ticket {
+    background-color: var(--ticket_color);
+    display: inline-block;
+    padding: 2em;
+    margin: 1em;
+    border: 1px solid var(--border_color);
+    max-width: 18em;
+    word-wrap: break-word;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: var(--text_color);
+}
+
+a.ticket {
+    text-decoration: none;
+}
+
+/* Shadow Lvl 1 */
+
+.ticket, .ticket > img {
+    /* box-shadow: 3px 3px var(--shadow_color); */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.24);
+}
+
+.ticket > img[small="true"] {
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+/* Shadow Lvl 2 (Interactive) */
+
+a.ticket, a.smLogo {
+    /* box-shadow: 3px 3px var(--shadow_color); */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+/* Hover Shadow */
+
+a.ticket:hover, a.smLogo:hover {
+    /* color: var(--text_hl);
+    border: 1px solid var(--hl);
+    box-shadow: 5px 5px var(--shadow_color); */
+    background-color: var(--ticket_hl);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+/* ticket Img */
+
+.ticket > img, .smLogo {
+    max-width: 100%;
+    border: 1px solid var(--border_color);
+}
