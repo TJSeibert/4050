@@ -1,4 +1,13 @@
 {% extends "cinema/base.html" %}
 {% block content %}
-
+<h3>Movie Details:</h3>
+<img class="poster" src="{{ movie.poster.url }}">
+<p>Title: {{ movie.title }}</p>
+<p>Category: {{ movie.category }}</p>
+<p>Rating: {{ movie.rating }}</p>
+<p>Cast: {{ movie.cast }}</p>
+<p>Director: {{ movie.director }}</p>
+<p>Producer: {{ movie.producer }}</p>
+<p>Synopsis: {{ movie.synopsis }}</p>
+<a href="{% url 'show-list' %}">Show Dates and Times</a>
 {% endblock content %}

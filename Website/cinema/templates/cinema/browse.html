@@ -1,41 +1,31 @@
 {% extends "cinema/base.html" %}
 {% block content %}
-<p>Browse movies by genre or search for a specific movie.</p>
+<p>Search for movies by Title or Category:</p>
 
-<div class="row">
-  <div class="left" style="background-color:#bbb;">
-    <h2>Browse</h2>
-    <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search movie by title..." title="Type in a category">
-    <ul id="myMenu">
-      <li><a href="#">All Movies</a></li>
-      <li><a href="#">Comedy</a></li>
-      <li><a href="#">Drama</a></li>
-      <li><a href="#">Thriller</a></li>
-      <li><a href="#">Romance</a></li>
-    </ul>
-  </div>
-  
-  <div class="right" style="background-color:#ddd;">
-    <h3>All movies</h3>
-    <img src="SMPoster.jpg" width="200" height="350">
-  </div>
-</div>
+<br/>
+<form action="{% url 'cinema-browse' %}" method="GET" value="{{request.GET.q}}">
+Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search Movies by Title Or Category..."/>
+<input type="submit" name="submit" value="Search"/>
+</form>
 
-<script>
-function myFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("mySearch");
-  filter = input.value.toUpperCase();
-  ul = document.getElementById("myMenu");
-  li = ul.getElementsByTagName("li");
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("a")[0];
-    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
-</script>
+
+{% if submitbutton == 'Search' and request.GET.q != '' %}
+{% if results %}
+<h1>Results for <b>{{ request.GET.q }}</b></h1>
+<br/><br/>
+
+{% for result in results %}
+
+<h5> {{result.title}} </h5>
+
+<img class="poster" src="{{ result.poster.url }}">
+<h5> {{ result.rating }} </h5>
+<a href="movie/{{ result.movie_id }}">View Details</a>
+
+{% endfor %}
+{% else %}
+No results found
+{% endif %}
+{% endif %}
+
 {% endblock content %}

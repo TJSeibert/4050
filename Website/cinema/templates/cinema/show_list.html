@@ -1,0 +1,16 @@
+{% extends "cinema/base.html" %}
+{% block content %}
+
+<h1>Shows</h1>
+</br>
+{% for show in object_list %}
+</br>
+<p>Showroom: {{ show.showroom_name }}</p>
+<p>Time: {{ show.scheduledTime }}</p>
+<p>Movie: {{ show.movie_name}}</p>
+<a href="">Book This Movie</a>
+</br>
+{% endfor %}
+
+
+{% endblock content %}

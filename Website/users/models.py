@@ -8,6 +8,7 @@ class Profile(models.Model):
     billing_address = models.CharField(max_length=50, default="123 North Street")
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     promo_register = models.BooleanField(default=False)
+    card_number = models.CharField(max_length=16, default="1234123412341234")
 
     def __str__(self):
         return f'{self.user.username} Profile'
