@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from . models import Movie, Show, Showroom, seatInShowTime
+from django.views.generic.base import TemplateView
+from . models import Movie, Show, Showroom, seatInShowTime, Ticket
 from django.db.models import Q
 
 
@@ -30,6 +31,22 @@ def browse(request):
             return render(request, 'cinema/browse.html')
     else:
         return render(request, 'cinema/browse.html')
+
+
+def ticketSelect(request):
+    movies = Movie.objects.all()
+    showrooms = Showroom.objects.all()
+    shows = Show.objects.all()
+    tickets = Ticket.objects.all()
+
+    context = {
+        'movie': movies,
+        'showroom': showrooms,
+        'show': shows,
+        'ticket': tickets,
+    }
+
+    return render(request, 'cinema/ticketselection.html', context)
 
 
 class MovieDetailView(DetailView):

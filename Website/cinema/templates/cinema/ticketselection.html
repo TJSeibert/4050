@@ -1,13 +1,13 @@
 {% extends "cinema/base.html" %}
 {% block content %}
-<h3>Select Tickets for {{ movie.title }} in Showroom {{ show.showroom_name }}:</h3>
-<img class="poster" src="{{ movie.poster.url }}">
-<p> {{ movie.title }} </p>
-<p>Category: {{ movie.category }}</p>
-<p>Rating: {{ movie.rating }}</p>
-<p>Cast: {{ movie.cast }}</p>
-<p>Director: {{ movie.director }}</p>
-<p>Producer: {{ movie.producer }}</p>
-<p>Synopsis: {{ movie.synopsis }}</p>
-<a href="{% url 'checkout-info' %}">Checkout</a>
+<h3>Select Amount of Tickets for {{ movie.title }} in Showroom {{ show.showroom_name }}:</h3>
+
+<div>
+	
+</div>
+
+
+<h2>Select Seat: </h2>
+
+<a href="{% url 'show-list' %}">Go Back</a>
 {% endblock content %}

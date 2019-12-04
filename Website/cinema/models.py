@@ -5,6 +5,7 @@ import datetime
 from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 
+
 class Movie(models.Model):
     movie_id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=50, default='title', unique=True)
@@ -20,14 +21,15 @@ class Movie(models.Model):
 
 
 class Showroom(models.Model):
-    seat_rows = models.IntegerField()
-    seat_columns = models.IntegerField()
+    seat_rows = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(30)])
+    seat_columns = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(30)])
 
     def seat_num(self):
         return self.seat_rows.to_python() * self.seat_columns.to_python()
 
 
 class Show(models.Model):
+    show_id = models.IntegerField(primary_key=True)
     showroom_id = models.ForeignKey(Showroom, on_delete=models.CASCADE)
     showroom_name = models.IntegerField(default=0)
     movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -41,7 +43,13 @@ class Show(models.Model):
 class seatInShowTime(models.Model):
     seatNumber = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
     show_id = models.ForeignKey(Show, on_delete=models.CASCADE)
-    seatOccupied = models.BooleanField(default=False)
+    status = (
+        ('Empty', 'Empty'),
+        ('Filled', 'Filled'),
+        ('Pending', 'Pending'),
+    )
+
+    seatStatus = models.CharField(max_length=10, choices=status)
 
 
 class Promotion(models.Model):
@@ -56,8 +64,8 @@ class Ticket(models.Model):
         ('Child', 'Child'),
         ('Adult', 'Adult'),
         ('Senior', 'Senior'),
-        )
-    ageType = models.CharField(max_length = 100, choices = age)
+    )
+    ageType = models.CharField(max_length=100, choices=age)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def setPrice(sender, **kwargs):
