@@ -1,14 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+import django
 from PIL import Image
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    billing_address = models.CharField(max_length=50, default="123 North Street")
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     promo_register = models.BooleanField(default=False)
+
+    billing_address = models.CharField(max_length=50, default="123 North Street")
     card_number = models.CharField(max_length=16, default="1234123412341234")
+    exp_date = models.CharField(max_length=5, default="01/99")
+    card_type = models.CharField(max_length=16, default="MC")
 
     def __str__(self):
         return f'{self.user.username} Profile'

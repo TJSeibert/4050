@@ -40,7 +40,8 @@ def cart(request):
 
 def display_form(request, form=None, context={}):
     if form is None:
-        form = CheckoutForm()
+        profile = request.user.profile
+        form = CheckoutForm({"billing_address": profile.billing_address, "expiration": profile.exp_date, "card_number": profile.card_number})
     context["form"] = form
     return render(request, "checkout/checkout.html", context)
 
@@ -61,6 +62,14 @@ def finalize(request):
         if form.is_valid():
             email_subject = "Confirm Your Purchase"
             user = request.user
+            if form.fields["save"]:
+                profile = user.profile
+                fields = form.cleaned_data
+                profile.exp_date = fields["expiration"]
+                profile.billing_address = fields["billing_address"]
+                profile.card_number = fields["card_number"]
+                profile.card_type = fields["card_type"]
+                profile.save()
             message = render_to_string("checkout/confirmation_email.html", context={"user": user, "cart": cart, "total_price": total_price(cart)})
             print(message)
             to_email = user.email
