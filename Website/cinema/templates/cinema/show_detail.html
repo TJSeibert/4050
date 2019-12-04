@@ -1,0 +1,13 @@
+{% extends "cinema/base.html" %}
+{% block content %}
+<h3>Select Amount of Tickets for {{ show.movie_name }} in Showroom {{ show.showroom_name }}:</h3>
+
+<div>
+	<p>show.movie_id.rating</p> 
+</div>
+
+
+<h2>Select Seat: </h2>
+
+<a href="{% url 'show-list' %}">Go Back</a>
+{% endblock content %}

@@ -12,6 +12,11 @@ ul {
   margin: 0;
 }
 
+img {
+  height: 300px;
+  width: 200px;
+}
+
 .bg-steel {
   background-color: #5f788a;
 }

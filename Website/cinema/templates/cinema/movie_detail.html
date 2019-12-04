@@ -9,5 +9,8 @@
 <p>Director: {{ movie.director }}</p>
 <p>Producer: {{ movie.producer }}</p>
 <p>Synopsis: {{ movie.synopsis }}</p>
+
+{{ movie.trailer |safe }}
+
 <a href="{% url 'show-list' %}">Show Dates and Times</a>
 {% endblock content %}

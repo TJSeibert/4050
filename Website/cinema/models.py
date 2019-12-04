@@ -29,27 +29,29 @@ class Showroom(models.Model):
 
 
 class Show(models.Model):
-    show_id = models.IntegerField(primary_key=True)
+    show_id = models.IntegerField(primary_key=True, default=1)
     showroom_id = models.ForeignKey(Showroom, on_delete=models.CASCADE)
     showroom_name = models.IntegerField(default=0)
     movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
     movie_name = models.CharField(max_length=25, default='None')
     scheduledTime = models.TimeField()
+    ticket = models.ForeignKey('Ticket', default=2, on_delete=models.CASCADE)
+    seatInShowTime = models.ForeignKey('seatInShowTime', default=1, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = [("showroom_id", "scheduledTime")]
 
 
 class seatInShowTime(models.Model):
-    seatNumber = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(30)])
-    show_id = models.ForeignKey(Show, on_delete=models.CASCADE)
+    seatNumber = models.IntegerField(primary_key=True)
+    show_id = models.ForeignKey('Show', default=1, on_delete=models.CASCADE)
     status = (
         ('Empty', 'Empty'),
         ('Filled', 'Filled'),
         ('Pending', 'Pending'),
     )
 
-    seatStatus = models.CharField(max_length=10, choices=status)
+    seatStatus = models.CharField(max_length=10, choices=status, default='Empty')
 
 
 class Promotion(models.Model):
