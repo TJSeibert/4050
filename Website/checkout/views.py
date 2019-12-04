@@ -5,40 +5,46 @@ from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from cinema.models import Show, Promotion
+import django
 
 # Here's what's in a ticket object:
-# * Movie ID
-# * Showing ID
-# * Seats
+# * Show ID
+# * Seat
 # * Type
-# * Movie Name (after processing by this view)
-
-def ticket():
-    return {
-    "m_id": 0,
-    "show_id": 0,
-    "seats": [(2, 'A')],
-    "type": "matinee",
-    "name": None
-    }
-
 
 def total_price(cart):
     return sum(map(lambda t: 12, cart))
 
 
 def cart(request):
-    cart = request.session.get("cart", default=[ticket(), ticket()])
+    cart = request.session.get("cart", default=[])
     # In case the default was used
     request.session["cart"] = cart
-    for tick in cart:
-        # TODO :: Get movie name from database using ticket.m_id
-        tick["name"] = "Movie Name"
-    context = {'cart': cart}
+    context = {'cart': get_disp_tickets(cart) }
     return render(request, "checkout/cart.html", context)
 
 
-def display_form(request, form=None, context={}):
+def get_disp_tickets(cart, promo=1):
+    disp_tickets = []
+    for ticket in cart:
+        show = Show.objects.get(pk=ticket["show_id"])
+        movie = show.movie_id
+        disp_tickets.append({
+            "name": movie.title,
+            "type": ticket["type"],
+            "seat": ticket["seat"],
+            "time": show.scheduledTime,
+            "price": 12 * promo
+        })
+    return disp_tickets
+
+
+def display_form(request, form=None):
+    cart = request.session["cart"]
+    disp_tickets = get_disp_tickets(cart)
+    # TODO :: Get ticket price from ticket.type
+    context = { 'cart': disp_tickets, 'total_price': total_price(cart) }
     if form is None:
         profile = request.user.profile
         form = CheckoutForm({"billing_address": profile.billing_address, "expiration": profile.exp_date, "card_number": profile.card_number})
@@ -47,11 +53,7 @@ def display_form(request, form=None, context={}):
 
 
 def info(request):
-    cart = request.session["cart"]
-    # TODO :: Get ticket price from ticket.type
-    # TODO :: Get previous billing data if stored
-    context = { 'cart': cart, 'total_price': total_price(cart) }
-    return display_form(request, context=context)
+    return display_form(request)
 
 
 def finalize(request):
@@ -70,12 +72,22 @@ def finalize(request):
                 profile.card_number = fields["card_number"]
                 profile.card_type = fields["card_type"]
                 profile.save()
-            message = render_to_string("checkout/confirmation_email.html", context={"user": user, "cart": cart, "total_price": total_price(cart)})
+            fields = form.cleaned_data
+            promo_amt = 1
+            now = django.utils.timezone.now()
+            if fields["promo_code"]:
+                for promotion in Promotion.objects.all():
+                    if promotion.code == fields["promo_code"] and promotion.start <= now < promotion.end:
+                        promo_amt = promotion.amt
+            message = render_to_string("checkout/confirmation_email.html", context={"user": user, "cart": get_disp_tickets(cart, promo_amt)})
             print(message)
             to_email = user.email
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
             messages.success(request, "Confirmation sent to email.")
+
+            # TODO :: Put tickets in database
+
             del request.session["cart"]
             return redirect("cinema-home")
-    return display_form(request, form, {"cart": cart, "total_price": total_price(cart)})
+    return display_form(request, form)

@@ -1,11 +1,13 @@
 {% autoescape off %}
 Hi, {{ user.username }},
 
-This email is to confirm your purchase of {{ cart|length }} tickets totaling {{ total_price }} dollars, listed below:
+This email is to confirm your purchase of the {{ cart|length }} tickets listed below:
 {% for ticket in cart %}
 
  * Movie: {{ ticket.name }}
  * Type: {{ ticket.type }}
- * Seats: {% for seat in ticket.seats %}{{ seat.0 }}{{ seat.1 }}, {% endfor %}
+ * Seat: Row {{ ticket.seat.0 }}, Column {{ ticket.seat.1 }}
+ * Time: {{ ticket.time }}
+ * Price: {{ ticket.price }}
 {% endfor %}
 {% endautoescape %}

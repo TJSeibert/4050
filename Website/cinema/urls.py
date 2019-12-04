@@ -7,5 +7,6 @@ urlpatterns = [
     path(r'browse/^$', views.browse, name='cinema-browse'),
     path('browse/movie/<int:pk>/', views.MovieDetailView.as_view(), name='detail'),
     path('shows/', views.ShowtimesListView.as_view(), name='show-list'),
-    path('shows/select/', views.ticketSelect, name='ticket-select')
+    path('shows/select/', views.ticketSelect, name='ticket-select'),
+    path('shows/select/check', views.ticketCheck, name='ticket-check')
 ]

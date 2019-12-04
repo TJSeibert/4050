@@ -14,7 +14,9 @@
                 <div class="ticket">
                     <h2>{{ ticket.name }}</h2>
                     <p><b>Type:</b> {{ ticket.type }}</p>
-                    <p><b>Seats:</b> {% for seat in ticket.seats %}{{ seat.0 }}{{ seat.1 }}, {% endfor %}</p>
+                    <p><b>Seat:</b> Row {{ ticket.seat.0 }}, Column {{ ticket.seat.1 }}</p>
+                    <p><b>Price:</b> ${{ ticket.price }}</p>
+                    <p><b>Time:</b> {{ ticket.time }}</p>
                 </div>
             {% endfor %}
 

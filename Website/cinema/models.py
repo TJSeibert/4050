@@ -54,6 +54,7 @@ class seatInShowTime(models.Model):
 
 class Promotion(models.Model):
     amt = models.FloatField(default=0.5)
+    code = models.CharField(max_length=24, default="promo")
     start = models.DateField()
     end = models.DateField()
 

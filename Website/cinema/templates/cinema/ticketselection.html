@@ -2,12 +2,31 @@
 {% block content %}
 <h3>Select Amount of Tickets for {{ movie.title }} in Showroom {{ show.showroom_name }}:</h3>
 
-<div>
-	
-</div>
+<form action="/shows/select/check" method="POST">
+    {% csrf_token %}
+    <div>
+    {% for ticket_field in form.get_ticket_fields %}
+    {{ ticket_field.label }} : {{ ticket_field }}
+    <br />
+    {% endfor %}
+    </div>
 
 
-<h2>Select Seat: </h2>
+    <h2>Select Seat: </h2>
+
+    <div>
+    <h4>Screen</h4>
+    <div>
+    {% for row in form.get_rows %}
+        {% for seat in row %}
+        {{ seat }}
+        {% endfor %}
+        <br />
+    {% endfor %}
+    </div>
+    </div>
+    <input type="submit" value="Submit" />
+</form>
 
 <a href="{% url 'show-list' %}">Go Back</a>
 {% endblock content %}
