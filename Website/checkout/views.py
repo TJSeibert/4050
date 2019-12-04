@@ -37,15 +37,25 @@ def cart(request):
     context = {'cart': cart}
     return render(request, "checkout/cart.html", context)
 
+
+def display_form(request, form=None, context={}):
+    if form is None:
+        form = CheckoutForm()
+    context["form"] = form
+    return render(request, "checkout/checkout.html", context)
+
+
 def info(request):
     cart = request.session["cart"]
     # TODO :: Get ticket price from ticket.type
     # TODO :: Get previous billing data if stored
-    context = { 'cart': cart, 'total_price': total_price(cart), 'form': CheckoutForm() }
-    return render(request, "checkout/checkout.html", context)
+    context = { 'cart': cart, 'total_price': total_price(cart) }
+    return display_form(request, context=context)
+
 
 def finalize(request):
     cart = request.session["cart"]
+    form = None
     if request.method == "POST":
         form = CheckoutForm(request.POST)
         if form.is_valid():
@@ -57,6 +67,6 @@ def finalize(request):
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
             messages.success(request, "Confirmation sent to email.")
+            del request.session["cart"]
             return redirect("cinema-home")
-    del request.session["cart"]
-    return render(request, "checkout/cart.html", context={"cart": []})
+    return display_form(request, form, {"cart": cart, "total_price": total_price(cart)})

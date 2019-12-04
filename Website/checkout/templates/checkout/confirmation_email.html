@@ -1,7 +1,7 @@
 {% autoescape off %}
 Hi, {{ user.username }},
 
-This email is to confirm your purchase of {{ cart.length }} tickets totaling {{ total_price }} dollars, listed below:
+This email is to confirm your purchase of {{ cart|length }} tickets totaling {{ total_price }} dollars, listed below:
 {% for ticket in cart %}
 
  * Movie: {{ ticket.name }}
