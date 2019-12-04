@@ -11,7 +11,7 @@
 		{% if movie.currentlyPlaying %}
 		<div style="border-style: double;">
 		<h5> {{ movie.title }} </h5>
-		<img class="poster" src="{{ movie.poster.url }}">
+		<img class="poster" src="{{ movie.poster }}">
 		<h5> {{ movie.rating }} </h5>
 		<a href="browse/movie/{{ movie.movie_id }}">View Details</a>
 		</div>
@@ -27,7 +27,7 @@
 		{% if movie.currentlyPlaying == False %}
 		<div style="border-style: double;">
 		<h5> {{ movie.title }} </h5>
-		<img class="poster" src="{{ movie.poster.url }}">
+		<img class="poster" src="{{ movie.poster }}">
 		<h5> {{ movie.rating }} </h5>
 		<a href="browse/movie/{{ movie.movie_id }}">View Details</a>
 		</div>
@@ -36,7 +36,7 @@
 	{% endfor %}
 
 </div>
-	
+
 
 {% else %}
 	<h2>

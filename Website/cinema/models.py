@@ -6,21 +6,25 @@ from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 
 class Movie(models.Model):
+    movie_id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=50, default='title', unique=True)
     category = models.CharField(max_length=20, default='Not Available')
     cast = models.TextField(default='cast')
     director = models.CharField(max_length=25, default='None')
     producer = models.CharField(max_length=25, default='None')
     rating = models.CharField(max_length=5, default='NR')
-    poster = models.CharField()
+    poster = models.CharField(max_length=255)
     currentlyPlaying = models.BooleanField(default=False)
     synopsis = models.TextField(default='synopsis')
-    trailer = models.CharField()
+    trailer = models.CharField(max_length=255)
 
 
 class Showroom(models.Model):
     seat_rows = models.IntegerField()
     seat_columns = models.IntegerField()
+
+    def seat_num(self):
+        return self.seat_rows.to_python() * self.seat_columns.to_python()
 
 
 class Show(models.Model):

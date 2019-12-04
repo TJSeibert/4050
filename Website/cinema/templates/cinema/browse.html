@@ -18,7 +18,7 @@ Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search
 
 <h5> {{result.title}} </h5>
 
-<img class="poster" src="{{ result.poster.url }}">
+<img class="poster" src="{{ result.poster }}">
 <h5> {{ result.rating }} </h5>
 <a href="movie/{{ result.movie_id }}">View Details</a>
 
