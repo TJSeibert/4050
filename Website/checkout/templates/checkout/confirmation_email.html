@@ -1,3 +1,11 @@
 {% autoescape off %}
-Hi, {{ user.username }}. In the future, this email will contain information about the movies you've just booked.
+Hi, {{ user.username }},
+
+This email is to confirm your purchase of {{ cart.length }} tickets totaling {{ total_price }} dollars, listed below:
+{% for ticket in cart %}
+
+ * Movie: {{ ticket.name }}
+ * Type: {{ ticket.type }}
+ * Seats: {% for seat in ticket.seats %}{{ seat.0 }}{{ seat.1 }}, {% endfor %}
+{% endfor %}
 {% endautoescape %}

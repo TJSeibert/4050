@@ -23,6 +23,10 @@ def ticket():
     }
 
 
+def total_price(cart):
+    return sum(map(lambda t: 12, cart))
+
+
 def cart(request):
     cart = request.session.get("cart", default=[ticket(), ticket()])
     # In case the default was used
@@ -37,19 +41,22 @@ def info(request):
     cart = request.session["cart"]
     # TODO :: Get ticket price from ticket.type
     # TODO :: Get previous billing data if stored
-    context = { 'cart': cart, 'total_price': sum(map(lambda t: 12, cart)), 'form': CheckoutForm() }
+    context = { 'cart': cart, 'total_price': total_price(cart), 'form': CheckoutForm() }
     return render(request, "checkout/checkout.html", context)
 
 def finalize(request):
+    cart = request.session["cart"]
     if request.method == "POST":
         form = CheckoutForm(request.POST)
         if form.is_valid():
             email_subject = "Confirm Your Purchase"
             user = request.user
-            message = render_to_string("checkout/confirmation_email.html", {"user": user})
+            message = render_to_string("checkout/confirmation_email.html", context={"user": user, "cart": cart, "total_price": total_price(cart)})
+            print(message)
             to_email = user.email
             email = EmailMessage(email_subject, message, to=[to_email])
             email.send()
             messages.success(request, "Confirmation sent to email.")
             return redirect("cinema-home")
-    return render(request, "checkout/cart.html", context)
+    del request.session["cart"]
+    return render(request, "checkout/cart.html", context={"cart": []})
